@@ -1,6 +1,8 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+#include "sum_array.h"
+
 //' Sum a numeric vector using loop unrolling
 //'
 //' @param x A numeric vector

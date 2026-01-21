@@ -72,9 +72,9 @@ mb <- microbenchmark(
 
 print(mb)
 #> Unit: microseconds
-#>                  expr     min       lq     mean   median       uq      max
-#>          Base R sum() 859.953 867.1935 888.6408 867.3795 870.8615 1124.649
-#>  Rcpp sum_array_cpp() 687.301 691.7085 698.2735 696.9235 698.3855  883.523
+#>                  expr      min        lq      mean   median       uq      max
+#>          Base R sum() 1861.160 1870.6275 1874.3873 1873.022 1876.715 1898.920
+#>  Rcpp sum_array_cpp()  930.144  938.7905  943.6515  939.552  946.865  992.481
 #>  neval
 #>    100
 #>    100

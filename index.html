@@ -54,22 +54,160 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="templaterpackage">templateRpackage<a class="anchor" aria-label="anchor" href="#templaterpackage"></a>
 </h1></div>
-<p>A template for R packages.</p>
+<p>A modern template for R packages with Rcpp, CI/CD, and documentation.</p>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr class="header">
+<th>Feature</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Rcpp</strong></td>
+<td>C++ integration with example function using loop unrolling</td>
+</tr>
+<tr class="even">
+<td><strong>testthat</strong></td>
+<td>Unit testing framework with separate test files</td>
+</tr>
+<tr class="odd">
+<td><strong>roxygen2</strong></td>
+<td>Documentation generation from code comments</td>
+</tr>
+<tr class="even">
+<td><strong>pkgdown</strong></td>
+<td>Automatic documentation website</td>
+</tr>
+<tr class="odd">
+<td><strong>renv</strong></td>
+<td>Reproducible dependency management</td>
+</tr>
+<tr class="even">
+<td><strong>GitHub Actions</strong></td>
+<td>CI/CD for R-CMD-check and pkgdown deployment</td>
+</tr>
+<tr class="odd">
+<td><strong>air</strong></td>
+<td>Extremely fast R code formatter (Rust-based)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="project-structure">Project Structure<a class="anchor" aria-label="anchor" href="#project-structure"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>├── R<span class="sc">/</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>│   ├── add.R              <span class="co"># Pure R function example</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>│   └── cpp.R              <span class="co"># Rcpp configuration</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>├── src<span class="sc">/</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>│   └── sum_array.cpp      <span class="co"># C++ function with Rcpp</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>├── tests<span class="sc">/</span>testthat<span class="sc">/</span>        <span class="co"># Unit tests</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>├── vignettes<span class="sc">/</span>             <span class="co"># Package vignettes</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>├── scripts<span class="sc">/</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>│   └── BUILD.sh           <span class="co"># Build automation script</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>├── .github<span class="sc">/</span>workflows<span class="sc">/</span>     <span class="co"># CI/CD workflows</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>└── _pkgdown.yml           <span class="co"># Documentation site config</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="build-commands">Build Commands<a class="anchor" aria-label="anchor" href="#build-commands"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Full workflow: document → clean → build → check → install</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> all</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Quick development iteration (skip R CMD check)</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> quick</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Generate documentation only</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> document</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># Format R code with air</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> format</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># Check formatting (for CI)</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> format-check</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co"># Build pkgdown site</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> pkgdown</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co"># Render README.Rmd to README.md</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> readme</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co"># See all options</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="ex">./scripts/BUILD.sh</span> help</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://derecksprojects.github.io/templateRpackage">templateRpackage</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pure R function</span></span>
+<span><span class="fu"><a href="reference/add.html">add</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3</span></span>
+<span></span>
+<span><span class="co"># Rcpp function (C++)</span></span>
+<span><span class="fu"><a href="reference/sum_array_cpp.html">sum_array_cpp</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 500000500000</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install <code>templateRpackage</code> using:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"derecksprojects/templateRpackage"</span><span class="op">)</span></span></code></pre></div>
-<p>Or from CRAN:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"templateRpackage"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># From GitHub</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"derecksprojects/templateRpackage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># From CRAN (when available)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"templateRpackage"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="using-this-template">Using This Template<a class="anchor" aria-label="anchor" href="#using-this-template"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>Click “Use this template” on GitHub</li>
+<li>Clone your new repository</li>
+<li>Update <code>DESCRIPTION</code> with your package details</li>
+<li>Rename the package: update <code>DESCRIPTION</code>, <code>NAMESPACE</code>, and <code>_pkgdown.yml</code>
+</li>
+<li>Replace example functions in <code>R/</code> and <code>src/</code>
+</li>
+<li>Update tests in <code>tests/testthat/</code>
+</li>
+<li>Run <code>./scripts/BUILD.sh all</code> to verify everything works</li>
+</ol>
+<div class="section level3">
+<h3 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
+</h3>
+<ul>
+<li>R ≥ 4.0</li>
+<li>Rtools (Windows) or Xcode CLI (macOS) for C++ compilation</li>
+<li>
+<a href="https://posit-dev.github.io/air/" class="external-link">air</a> for code formatting (optional)</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="cicd">CI/CD<a class="anchor" aria-label="anchor" href="#cicd"></a>
+</h2>
+<p>GitHub Actions workflows included:</p>
+<ul>
+<li>
+<strong>R-CMD-check</strong>: Tests on macOS, Windows, Ubuntu with multiple R versions</li>
+<li>
+<strong>pkgdown</strong>: Builds and deploys documentation to GitHub Pages</li>
+</ul>
+<p>Both workflows use <code>concurrency</code> to cancel in-progress runs when new commits are pushed.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p>This project is licensed under the MIT License.</p>
+<p>MIT License with Citation Requirement</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

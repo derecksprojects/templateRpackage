@@ -1,0 +1,58 @@
+name: pkgdown
+on:
+  push
+permissions:
+  contents: write
+jobs:
+  main:
+    name: Build and publish website
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+          r-version: 'release'
+
+      - name: Set R_HOME
+        run: |
+          echo "R_HOME=$(R RHOME)" >> $GITHUB_ENV
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev
+
+      - name: Install R dependencies
+        run: |
+          install.packages(c("knitr", "devtools", "renv", "Rcpp", "pkgdown", "rcmdcheck", "remotes", "box"))
+          renv::install()
+          renv::restore()
+          renv::install("dereckmezquita/kucoin")
+        shell: Rscript {0}
+
+      - name: Build and install package
+        run: |
+          devtools::install()
+        shell: Rscript {0}
+
+      - name: Configure git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Deploy to branch
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        shell: Rscript {0}
+        run: pkgdown::deploy_to_branch(branch = "bot/github-pages")

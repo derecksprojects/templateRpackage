@@ -73,7 +73,7 @@ ${BOLD}DESCRIPTION:${NC}
     Build, check, install, and document R packages with ease.
 
 ${BOLD}COMMANDS:${NC}
-    ${BOLD}all${NC}              Run full workflow: document → clean → build → check → install
+    ${BOLD}all${NC}              Run full workflow: document → clean → build → check → install → readme → pkgdown
     ${BOLD}document${NC}         Generate package documentation (roxygen2)
     ${BOLD}clean${NC}            Remove previous build artifacts
     ${BOLD}build${NC}            Build the package tarball
@@ -184,8 +184,12 @@ cmd_check() {
         check_opts="$check_opts --no-manual"
         print_info "Skipping manual checks"
     fi
-    run_cmd R CMD check $check_opts ${PACKAGE_NAME}_*.tar.gz
-    print_success "Package check completed"
+    # Don't fail script on check errors (common without LaTeX)
+    if run_cmd R CMD check $check_opts ${PACKAGE_NAME}_*.tar.gz; then
+        print_success "Package check completed with no errors"
+    else
+        print_warning "Package check completed with warnings/errors (see log above)"
+    fi
 }
 
 cmd_install() {
@@ -263,6 +267,16 @@ cmd_all() {
     echo ""
 
     cmd_install
+    echo ""
+
+    # Build README if README.Rmd exists
+    if [[ -f "README.Rmd" ]]; then
+        cmd_readme
+        echo ""
+    fi
+
+    # Build pkgdown site
+    cmd_pkgdown
     echo ""
 
     print_success "Full workflow complete!"

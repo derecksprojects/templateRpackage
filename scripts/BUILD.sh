@@ -76,6 +76,8 @@ ${BOLD}COMMANDS:${NC}
     ${BOLD}install${NC}          Install the package locally
     ${BOLD}pkgdown${NC}          Build pkgdown website
     ${BOLD}pkgdown-preview${NC}  Build and preview pkgdown website
+    ${BOLD}format${NC}           Format R code using air (extremely fast formatter)
+    ${BOLD}format-check${NC}     Check if R code is formatted (no changes)
     ${BOLD}quick${NC}            Quick workflow: document → install (skip check)
     ${BOLD}help${NC}             Show this help message
 
@@ -104,6 +106,12 @@ ${BOLD}EXAMPLES:${NC}
 
     # Check without building manual (faster)
     $SCRIPT_NAME --no-manual check
+
+    # Format all R code
+    $SCRIPT_NAME format
+
+    # Check formatting in CI (fails if not formatted)
+    $SCRIPT_NAME format-check
 
 ${BOLD}NOTES:${NC}
     - Package name is auto-detected from current directory: ${BOLD}$PACKAGE_NAME${NC}
@@ -191,6 +199,32 @@ cmd_pkgdown_preview() {
     run_cmd Rscript -e "pkgdown::preview_site()"
 }
 
+cmd_format() {
+    print_header "Formatting R code with air..."
+    if ! command -v air &> /dev/null; then
+        print_error "air is not installed. Install it from: https://posit-dev.github.io/air/"
+        print_info "Quick install: curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh"
+        exit 1
+    fi
+    run_cmd air format .
+    print_success "R code formatted"
+}
+
+cmd_format_check() {
+    print_header "Checking R code formatting..."
+    if ! command -v air &> /dev/null; then
+        print_error "air is not installed. Install it from: https://posit-dev.github.io/air/"
+        print_info "Quick install: curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh"
+        exit 1
+    fi
+    if run_cmd air format --check .; then
+        print_success "All R code is properly formatted"
+    else
+        print_error "Some files need formatting. Run '$SCRIPT_NAME format' to fix."
+        exit 1
+    fi
+}
+
 cmd_all() {
     print_header "Running full build workflow for: $PACKAGE_NAME"
     echo ""
@@ -261,7 +295,7 @@ while [[ $# -gt 0 ]]; do
             NO_MANUAL=1
             shift
             ;;
-        all|document|clean|build|check|install|pkgdown|pkgdown-preview|quick)
+        all|document|clean|build|check|install|pkgdown|pkgdown-preview|format|format-check|quick)
             COMMAND=$1
             shift
             ;;
@@ -308,6 +342,12 @@ case $COMMAND in
         ;;
     pkgdown-preview)
         cmd_pkgdown_preview
+        ;;
+    format)
+        cmd_format
+        ;;
+    format-check)
+        cmd_format_check
         ;;
     quick)
         cmd_quick

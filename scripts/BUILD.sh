@@ -81,14 +81,13 @@ ${BOLD}COMMANDS:${NC}
     ${BOLD}install${NC}          Install the package locally
     ${BOLD}pkgdown${NC}          Build pkgdown website
     ${BOLD}pkgdown-preview${NC}  Build and preview pkgdown website
-    ${BOLD}format${NC}           Format R code using air (extremely fast formatter)
-    ${BOLD}format-check${NC}     Check if R code is formatted (no changes)
-    ${BOLD}format-cpp${NC}       Format C++ code using clang-format
-    ${BOLD}format-cpp-check${NC} Check if C++ code is formatted (no changes)
-    ${BOLD}format-all${NC}       Format both R and C++ code
     ${BOLD}readme${NC}           Render README.Rmd to README.md
     ${BOLD}quick${NC}            Quick workflow: document → install (skip check)
     ${BOLD}help${NC}             Show this help message
+
+${BOLD}FORMATTING:${NC}
+    For code formatting, use scripts/FORMAT.sh instead.
+    Run: ./scripts/FORMAT.sh --help
 
 ${BOLD}OPTIONS:${NC}
     ${BOLD}-h, --help${NC}       Show this help message
@@ -115,18 +114,6 @@ ${BOLD}EXAMPLES:${NC}
 
     # Check without building manual (faster)
     $SCRIPT_NAME --no-manual check
-
-    # Format all R code
-    $SCRIPT_NAME format
-
-    # Format all C++ code
-    $SCRIPT_NAME format-cpp
-
-    # Format both R and C++ code
-    $SCRIPT_NAME format-all
-
-    # Check formatting in CI (fails if not formatted)
-    $SCRIPT_NAME format-check
 
     # Render README
     $SCRIPT_NAME readme
@@ -221,83 +208,6 @@ cmd_pkgdown_preview() {
     run_cmd Rscript -e "pkgdown::preview_site()"
 }
 
-cmd_format() {
-    print_header "Formatting R code with air..."
-    if ! command -v air &> /dev/null; then
-        print_error "air is not installed. Install it from: https://posit-dev.github.io/air/"
-        print_info "Quick install: curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh"
-        exit 1
-    fi
-    run_cmd air format .
-    print_success "R code formatted"
-}
-
-cmd_format_check() {
-    print_header "Checking R code formatting..."
-    if ! command -v air &> /dev/null; then
-        print_error "air is not installed. Install it from: https://posit-dev.github.io/air/"
-        print_info "Quick install: curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh"
-        exit 1
-    fi
-    if run_cmd air format --check .; then
-        print_success "All R code is properly formatted"
-    else
-        print_error "Some files need formatting. Run '$SCRIPT_NAME format' to fix."
-        exit 1
-    fi
-}
-
-cmd_format_cpp() {
-    print_header "Formatting C++ code with clang-format..."
-    if ! command -v clang-format &> /dev/null; then
-        print_error "clang-format is not installed."
-        print_info "Install with: brew install clang-format"
-        exit 1
-    fi
-
-    # Find all C++ files in src/
-    local cpp_files=$(find src -name "*.cpp" -o -name "*.h" -o -name "*.hpp" 2>/dev/null)
-    if [[ -z "$cpp_files" ]]; then
-        print_info "No C++ files found in src/"
-        return 0
-    fi
-
-    run_cmd clang-format -i $cpp_files
-    print_success "C++ code formatted"
-}
-
-cmd_format_cpp_check() {
-    print_header "Checking C++ code formatting..."
-    if ! command -v clang-format &> /dev/null; then
-        print_error "clang-format is not installed."
-        print_info "Install with: brew install clang-format"
-        exit 1
-    fi
-
-    # Find all C++ files in src/
-    local cpp_files=$(find src -name "*.cpp" -o -name "*.h" -o -name "*.hpp" 2>/dev/null)
-    if [[ -z "$cpp_files" ]]; then
-        print_info "No C++ files found in src/"
-        return 0
-    fi
-
-    # Check if files are formatted (--dry-run --Werror returns non-zero if changes needed)
-    if run_cmd clang-format --dry-run --Werror $cpp_files 2>/dev/null; then
-        print_success "All C++ code is properly formatted"
-    else
-        print_error "Some C++ files need formatting. Run '$SCRIPT_NAME format-cpp' to fix."
-        exit 1
-    fi
-}
-
-cmd_format_all() {
-    print_header "Formatting all code..."
-    cmd_format
-    echo ""
-    cmd_format_cpp
-    print_success "All code formatted"
-}
-
 cmd_readme() {
     print_header "Rendering README.Rmd to README.md..."
     if [[ ! -f "README.Rmd" ]]; then
@@ -388,7 +298,7 @@ while [[ $# -gt 0 ]]; do
             NO_MANUAL=1
             shift
             ;;
-        all|document|clean|build|check|install|pkgdown|pkgdown-preview|format|format-check|format-cpp|format-cpp-check|format-all|readme|quick)
+        all|document|clean|build|check|install|pkgdown|pkgdown-preview|readme|quick)
             COMMAND=$1
             shift
             ;;
@@ -435,21 +345,6 @@ case $COMMAND in
         ;;
     pkgdown-preview)
         cmd_pkgdown_preview
-        ;;
-    format)
-        cmd_format
-        ;;
-    format-check)
-        cmd_format_check
-        ;;
-    format-cpp)
-        cmd_format_cpp
-        ;;
-    format-cpp-check)
-        cmd_format_cpp_check
-        ;;
-    format-all)
-        cmd_format_all
         ;;
     readme)
         cmd_readme

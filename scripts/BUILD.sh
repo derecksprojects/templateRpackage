@@ -11,7 +11,12 @@ set -u  # Exit on undefined variables
 # Configuration
 # ============================================================================
 
-PACKAGE_NAME=$(basename "$PWD")
+# Get package name from DESCRIPTION file (not directory name)
+if [[ -f "DESCRIPTION" ]]; then
+    PACKAGE_NAME=$(grep "^Package:" DESCRIPTION | sed 's/Package: *//')
+else
+    PACKAGE_NAME=$(basename "$PWD")
+fi
 SCRIPT_NAME=$(basename "$0")
 
 # Colors for output
@@ -78,6 +83,7 @@ ${BOLD}COMMANDS:${NC}
     ${BOLD}pkgdown-preview${NC}  Build and preview pkgdown website
     ${BOLD}format${NC}           Format R code using air (extremely fast formatter)
     ${BOLD}format-check${NC}     Check if R code is formatted (no changes)
+    ${BOLD}readme${NC}           Render README.Rmd to README.md
     ${BOLD}quick${NC}            Quick workflow: document → install (skip check)
     ${BOLD}help${NC}             Show this help message
 
@@ -112,6 +118,9 @@ ${BOLD}EXAMPLES:${NC}
 
     # Check formatting in CI (fails if not formatted)
     $SCRIPT_NAME format-check
+
+    # Render README
+    $SCRIPT_NAME readme
 
 ${BOLD}NOTES:${NC}
     - Package name is auto-detected from current directory: ${BOLD}$PACKAGE_NAME${NC}
@@ -225,6 +234,16 @@ cmd_format_check() {
     fi
 }
 
+cmd_readme() {
+    print_header "Rendering README.Rmd to README.md..."
+    if [[ ! -f "README.Rmd" ]]; then
+        print_error "README.Rmd not found"
+        exit 1
+    fi
+    run_cmd Rscript -e "rmarkdown::render('README.Rmd', output_format = 'github_document')"
+    print_success "README.md generated"
+}
+
 cmd_all() {
     print_header "Running full build workflow for: $PACKAGE_NAME"
     echo ""
@@ -295,7 +314,7 @@ while [[ $# -gt 0 ]]; do
             NO_MANUAL=1
             shift
             ;;
-        all|document|clean|build|check|install|pkgdown|pkgdown-preview|format|format-check|quick)
+        all|document|clean|build|check|install|pkgdown|pkgdown-preview|format|format-check|readme|quick)
             COMMAND=$1
             shift
             ;;
@@ -348,6 +367,9 @@ case $COMMAND in
         ;;
     format-check)
         cmd_format_check
+        ;;
+    readme)
+        cmd_readme
         ;;
     quick)
         cmd_quick

@@ -1,5 +1,5 @@
 # Classic C++ style
 BasedOnStyle: LLVM
 IndentWidth: 2
-ColumnLimit: 100
+ColumnLimit: 120
 

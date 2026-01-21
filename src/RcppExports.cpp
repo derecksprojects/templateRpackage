@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 #ifdef RCPP_USE_GLOBAL_ROSTREAM
-Rcpp::Rostream<true>& Rcpp::Rcout = Rcpp::Rcpp_cout_get();
-Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+Rcpp::Rostream<true> &Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false> &Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // sum_array_cpp
@@ -23,10 +23,9 @@ RcppExport SEXP _templateRpackage_sum_array_cpp(SEXP xSEXP) {
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_templateRpackage_sum_array_cpp", (DL_FUNC)&_templateRpackage_sum_array_cpp, 1},
-    {NULL, NULL, 0}};
+    {"_templateRpackage_sum_array_cpp", (DL_FUNC)&_templateRpackage_sum_array_cpp, 1}, {NULL, NULL, 0}};
 
-RcppExport void R_init_templateRpackage(DllInfo* dll) {
+RcppExport void R_init_templateRpackage(DllInfo *dll) {
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
 }

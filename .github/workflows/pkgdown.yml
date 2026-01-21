@@ -1,57 +1,50 @@
-name: pkgdown
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  push
-permissions:
-  contents: write
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+name: pkgdown
+
+permissions: read-all
+
 jobs:
-  main:
-    name: Build and publish website
+  pkgdown:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Install pandoc
-        uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install R
-        uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
-          r-version: 'release'
 
-      - name: Set R_HOME
-        run: |
-          echo "R_HOME=$(R RHOME)" >> $GITHUB_ENV
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev
-
-      - name: Install R dependencies
-        run: |
-          install.packages(c("knitr", "devtools", "renv", "Rcpp", "pkgdown", "rcmdcheck", "remotes", "box"))
-          renv::install()
-          renv::restore()
+      - name: Build site
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
-      - name: Build and install package
-        run: |
-          devtools::install()
-        shell: Rscript {0}
-
-      - name: Configure git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Deploy to branch
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-        shell: Rscript {0}
-        run: pkgdown::deploy_to_branch(branch = "bot/github-pages")
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs

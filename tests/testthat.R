@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(template-R-package)
+library(templateRpackage)
 
-test_check("template-R-package")
+test_check("templateRpackage")

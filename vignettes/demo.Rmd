@@ -1,5 +1,5 @@
 ---
-title: "Demonstrating template-R-package"
+title: "Demonstrating templateRpackage"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{The Comparison class for statistics}
@@ -29,4 +29,4 @@ options(
 
 ## Demonstrate
 
-This is a minimal vignette to demonstrate the use of template-R-package. This is built and visible via the `pkgdown` site.
+This is a minimal vignette to demonstrate the use of templateRpackage. This is built and visible via the `pkgdown` site.

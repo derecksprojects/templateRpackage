@@ -1,6 +1,6 @@
-# Contributing to template-R-package
+# Contributing to templateRpackage
 
-Thank you for your interest in contributing to template-R-package!
+Thank you for your interest in contributing to templateRpackage!
 
 ## How to Contribute
 
@@ -29,4 +29,4 @@ Thank you for your interest in contributing to template-R-package!
 
 ## Need Help?
 
-Post in the discussions tab. Thank you for contributing to template-R-package!
+Post in the discussions tab. Thank you for contributing to templateRpackage!

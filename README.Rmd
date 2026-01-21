@@ -23,13 +23,13 @@ options(
 )
 ```
 
-# template-R-package
+# templateRpackage
 
 A template for R packages.
 
 ## Installation
 
-You can install `template-R-package` using:
+You can install `templateRpackage` using:
 
 ```r
 # install.packages("remotes")
@@ -38,7 +38,7 @@ remotes::install_github("dereckmezquita/template-R-package")
 
 Or from CRAN:
 ```r
-install.packages("template-R-package")
+install.packages("templateRpackage")
 ```
 
 ## License

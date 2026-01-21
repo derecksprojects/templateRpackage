@@ -132,9 +132,12 @@ base R’s <code><a href="https://rdrr.io/r/base/sum.html" class="external-link"
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Unit: microseconds</span></span>
-<span><span class="co">#&gt;                  expr     min      lq     mean   median      uq      max neval</span></span>
-<span><span class="co">#&gt;          Base R sum() 860.025 867.123 884.0967 867.9525 869.971 1245.417   100</span></span>
-<span><span class="co">#&gt;  Rcpp sum_array_cpp() 690.038 694.454 701.3357 699.7175 701.376  915.783   100</span></span></code></pre></div>
+<span><span class="co">#&gt;                  expr      min        lq     mean   median       uq      max</span></span>
+<span><span class="co">#&gt;          Base R sum() 1871.218 1970.2470 1980.524 1991.927 2001.135 2055.029</span></span>
+<span><span class="co">#&gt;  Rcpp sum_array_cpp()  954.579  995.1845 1008.571 1005.134 1013.159 1586.507</span></span>
+<span><span class="co">#&gt;  neval</span></span>
+<span><span class="co">#&gt;    100</span></span>
+<span><span class="co">#&gt;    100</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">autoplot</span><span class="op">(</span><span class="va">mb</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>

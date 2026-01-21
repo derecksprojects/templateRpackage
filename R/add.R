@@ -9,5 +9,5 @@ add <- function(x, y) {
   if (!is.numeric(x) || !is.numeric(y)) {
     stop("x and y must be numeric")
   }
-  x + y
+  return(x + y)
 }

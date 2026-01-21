@@ -8,18 +8,16 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/dereckmezquita/template-R-package/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/dereckmezquita/templateRpackage/blob/master/inst/CITATION)
 
-Mezquita, D. (2024). dereck: A personal development package by Dereck
-Mezquita for various data analysis and visualisation tasks. Intended as
-a staging ground for experimental code that may later be factored into
-standalone packages. R package version 2.0.0. Available at
-https://github.com/dereckmezquita/dereck
+Mezquita, D. (2026). templateRpackage: A Template R Package with Rcpp
+Support. R package version 0.0.0.9000. Available at
+https://github.com/dereckmezquita/templateRpackage
 
-    @Manual{dereck-2024,
-      title = {dereck: A personal development package by Dereck Mezquita for various data analysis and visualisation tasks. Intended as a staging ground for experimental code that may later be factored into standalone packages.},
+    @Manual{templateRpackage-2026,
+      title = {templateRpackage: A Template R Package with Rcpp Support},
       author = {Dereck Mezquita},
-      year = {2024},
-      note = {R package version 2.0.0},
-      url = {https://github.com/dereckmezquita/dereck},
+      year = {2026},
+      note = {R package version 0.0.0.9000},
+      url = {https://github.com/dereckmezquita/templateRpackage},
     }

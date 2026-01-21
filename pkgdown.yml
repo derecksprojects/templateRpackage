@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   demo: demo.html
-last_built: 2026-01-21T00:52Z
+last_built: 2026-01-21T00:54Z
 urls:
-  reference: https://dereckmezquita.github.io/template-R-package/reference
-  article: https://dereckmezquita.github.io/template-R-package/articles
+  reference: https://dereckmezquita.github.io/templateRpackage/reference
+  article: https://dereckmezquita.github.io/templateRpackage/articles

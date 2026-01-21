@@ -1,4 +1,4 @@
-url: https://dereckmezquita.github.io/templateRpackage/
+url: https://derecksprojects.github.io/templateRpackage/
 
 template:
   bootstrap: 5
@@ -10,7 +10,7 @@ navbar:
   components:
     github:
       icon: fa-github
-      href: https://github.com/dereckmezquita/templateRpackage
+      href: https://github.com/derecksprojects/templateRpackage
       aria-label: GitHub repository
 
 reference:

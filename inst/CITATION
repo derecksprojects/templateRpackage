@@ -6,12 +6,12 @@ bibentry(
   author   = person("Dereck", "Mezquita", comment = c(ORCID = "0000-0002-9307-6762")),
   year     = "2026",
   note     = "R package version 0.0.0.9000",
-  url      = "https://github.com/dereckmezquita/templateRpackage",
+  url      = "https://github.com/derecksprojects/templateRpackage",
   key      = "templateRpackage-2026",
   textVersion = paste(
     "Mezquita, D. (2026).",
     "templateRpackage: A Template R Package with Rcpp Support.",
     "R package version 0.0.0.9000.",
-    "Available at https://github.com/dereckmezquita/templateRpackage"
+    "Available at https://github.com/derecksprojects/templateRpackage"
   )
 )

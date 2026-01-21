@@ -1,4 +1,4 @@
-# templateRpackage [v0.0.1](https://github.com/dereckmezquita/templateRpackage/milestone/1)
+# templateRpackage [v0.0.1](https://github.com/derecksprojects/templateRpackage/milestone/1)
 
 ## BREAKING CHANGES
 

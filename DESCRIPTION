@@ -1,9 +1,9 @@
 Package: templateRpackage
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-URL: https://dereckmezquita.github.io/templateRpackage,
-    https://github.com/dereckmezquita/templateRpackage
-BugReports: https://github.com/dereckmezquita/templateRpackage/issues
+URL: https://derecksprojects.github.io/templateRpackage,
+    https://github.com/derecksprojects/templateRpackage
+BugReports: https://github.com/derecksprojects/templateRpackage/issues
 Authors@R:
     person(given = "Dereck",
            family = "Mezquita",

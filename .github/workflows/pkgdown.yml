@@ -38,7 +38,6 @@ jobs:
           install.packages(c("knitr", "devtools", "renv", "Rcpp", "pkgdown", "rcmdcheck", "remotes", "box"))
           renv::install()
           renv::restore()
-          renv::install("dereckmezquita/kucoin")
         shell: Rscript {0}
 
       - name: Build and install package

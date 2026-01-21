@@ -33,7 +33,7 @@ You can install `templateRpackage` using:
 
 ```r
 # install.packages("remotes")
-remotes::install_github("dereckmezquita/templateRpackage")
+remotes::install_github("derecksprojects/templateRpackage")
 ```
 
 Or from CRAN:

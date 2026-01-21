@@ -4,9 +4,9 @@
 
 This vignette demonstrates the two main functions in `templateRpackage`:
 
-1.  [`add()`](https://dereckmezquita.github.io/templateRpackage/reference/add.md) -
+1.  [`add()`](https://derecksprojects.github.io/templateRpackage/reference/add.md) -
     A simple R function to add two numbers
-2.  [`sum_array_cpp()`](https://dereckmezquita.github.io/templateRpackage/reference/sum_array_cpp.md) -
+2.  [`sum_array_cpp()`](https://derecksprojects.github.io/templateRpackage/reference/sum_array_cpp.md) -
     An Rcpp function to sum a numeric vector using loop unrolling
 
 ``` r
@@ -16,7 +16,7 @@ box::use(templateRpackage[ add, sum_array_cpp ])
 ## Using the add() function
 
 The
-[`add()`](https://dereckmezquita.github.io/templateRpackage/reference/add.md)
+[`add()`](https://derecksprojects.github.io/templateRpackage/reference/add.md)
 function is a simple R function that adds two numbers:
 
 ``` r
@@ -31,7 +31,7 @@ add(-5, 5)
 ## Using the sum_array_cpp() function
 
 The
-[`sum_array_cpp()`](https://dereckmezquita.github.io/templateRpackage/reference/sum_array_cpp.md)
+[`sum_array_cpp()`](https://derecksprojects.github.io/templateRpackage/reference/sum_array_cpp.md)
 function sums a numeric vector using C++ with loop unrolling for
 performance:
 
@@ -50,7 +50,7 @@ sum_array_cpp(x)
 ## Benchmarking: Rcpp vs Base R
 
 Let’s compare the performance of
-[`sum_array_cpp()`](https://dereckmezquita.github.io/templateRpackage/reference/sum_array_cpp.md)
+[`sum_array_cpp()`](https://derecksprojects.github.io/templateRpackage/reference/sum_array_cpp.md)
 against base R’s [`sum()`](https://rdrr.io/r/base/sum.html):
 
 ``` r
@@ -72,9 +72,9 @@ mb <- microbenchmark(
 
 print(mb)
 #> Unit: microseconds
-#>                  expr      min       lq      mean   median       uq      max
-#>          Base R sum() 1861.301 1870.258 1872.9103 1871.541 1875.643 1890.335
-#>  Rcpp sum_array_cpp()  929.774  939.046  941.2256  939.567  941.125  965.280
+#>                  expr      min       lq      mean    median        uq      max
+#>          Base R sum() 1860.930 1870.358 1874.9436 1872.7570 1878.0915 1904.712
+#>  Rcpp sum_array_cpp()  930.174  939.106  944.0822  941.0095  948.4685  993.563
 #>  neval
 #>    100
 #>    100

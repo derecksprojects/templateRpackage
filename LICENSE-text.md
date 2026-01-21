@@ -17,7 +17,7 @@
     Additionally, any use of this Software in commercial, academic or research settings
     must include appropriate citation. The required citation is:
 
-    Mezquita, D. (2024). dereck. https://github.com/dereckmezquita/dereck.
+    Mezquita, D. (2024). dereck. https://github.com/derecksprojects/templateRpackage.
     ORCID: 0000-0002-9307-6762
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR

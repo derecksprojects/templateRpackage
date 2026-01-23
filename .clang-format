@@ -5,3 +5,12 @@ ColumnLimit: 120
 BinPackParameters: false
 BinPackArguments: false
 AlignAfterOpenBracket: BlockIndent
+
+# Protect roxygen documentation comments from being reflowed
+# Roxygen comments use //' prefix and contain @ tags like @param, @return, @export
+# Also protects LaTeX math like \deqn{} and \eqn{} from being broken across lines
+ReflowComments: false
+
+# Alternative: Use CommentPragmas to match roxygen-style comments
+# This regex matches lines starting with //' (roxygen) or containing @ tags
+# CommentPragmas: "^//'|@param|@return|@export|@examples|@section|@seealso|\\\\deqn|\\\\eqn"

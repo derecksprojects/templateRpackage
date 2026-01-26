@@ -1,6 +1,7 @@
 # dev
 deprecated/
 *.ignore
+*.ignore.*
 
 # build
 docs/

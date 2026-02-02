@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Coverage Analysis Script for hpfi
+# Coverage Analysis Script
 
 # Parse arguments first (before loading packages)
 args <- commandArgs(trailingOnly = TRUE)
@@ -8,7 +8,7 @@ args <- commandArgs(trailingOnly = TRUE)
 show_help <- function() {
   cat(
     "
-COVERAGE.R - Code coverage analysis for hpfi
+COVERAGE.R - Code coverage analysis for R package
 
 USAGE:
   ./scripts/COVERAGE.R [OPTIONS]
@@ -55,7 +55,7 @@ if (!mode %in% valid_modes) {
 # Now load packages and run analysis
 library(covr)
 
-cat("Running coverage analysis for hpfi...\n\n")
+cat("Running coverage analysis for package...\n\n")
 
 # Run coverage
 cov <- package_coverage()
